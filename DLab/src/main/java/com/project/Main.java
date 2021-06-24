@@ -32,7 +32,9 @@ public class Main {
         List<String> list = readLinesFromFile();    //all data from file now represented as list
         List<Route> buffer = null;
 
-        getRoutes(list);    //method forms List<Routes> from the lines (parse string for data)
+       if(getRoutes(list)==1){ //method forms List<Routes> from the lines (parse string for data)
+            return;
+        }     
 
         int err = checkIfCorrect(routeList); //check if there are some errors; returns 0 if everything is ok
                                                                             // and index of line with error if not
@@ -99,7 +101,7 @@ public class Main {
         }
         return 0;
     }
-    public static void getRoutes(List<String> list) {
+    public static int getRoutes(List<String> list) {
 
 
         for (String str : list) {
@@ -112,11 +114,12 @@ public class Main {
                 try {
                     routeList.add(new Route(words[0], new Time(words[1]), new Time(words[2])));
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("Failed: Check time format");
+                    return 1;
                 }
             }
         }
-
+        return 0;
     }
 
     public static void filterRoutes() {
